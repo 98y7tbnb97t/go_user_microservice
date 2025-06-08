@@ -40,11 +40,14 @@ func (h *Handler) GetUser(ctx context.Context, req *userpb.UserRequest) (*userpb
 		return nil, err
 	}
 	return &userpb.UserResponse{
-		Id:    uint32(u.ID),
-		Email: u.Email,
+		User: &userpb.User{
+			Id:    uint32(u.ID),
+			Email: u.Email,
+		},
 	}, nil
 }
 
+// ListUsers now also returns a top-level User object (the first user in the list, or nil if empty)
 func (h *Handler) ListUsers(ctx context.Context, req *userpb.ListUsersRequest) (*userpb.ListUsersResponse, error) {
 	users, err := h.svc.GetAllUsers()
 	if err != nil {
@@ -57,8 +60,15 @@ func (h *Handler) ListUsers(ctx context.Context, req *userpb.ListUsersRequest) (
 			Email: u.Email,
 		})
 	}
+
+	var mainUser *userpb.User
+	if len(pbUsers) > 0 {
+		mainUser = pbUsers[0]
+	}
+
 	return &userpb.ListUsersResponse{
 		Users: pbUsers,
+		User:  mainUser, // new field: top-level user object
 	}, nil
 }
 

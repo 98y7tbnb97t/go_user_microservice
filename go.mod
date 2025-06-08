@@ -5,7 +5,7 @@ go 1.23.5
 require gorm.io/gorm v1.30.0
 
 require (
-	github.com/98y7tbnb97t/GoMicro v0.0.0-20250607053312-17e9192d17eb
+	github.com/98y7tbnb97t/GoMicro v1.0.8
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	github.com/jackc/pgx/v5 v5.7.5 // indirect
